@@ -1,0 +1,100 @@
+# =============================================================================
+# Git Ignore - Spring Boot & Maven Project
+# =============================================================================
+
+### 1. Build Output & Compiled Files ###
+target/
+build/
+out/
+bin/
+*.class
+${project.build.directory}/
+
+# Package artifacts (exclude generated archives, allow source)
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+
+### 2. Maven Wrapper & Cache ###
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/dists/
+.m2/
+
+### 3. Log Files & Crash Dumps ###
+*.log
+logs/
+log/
+hs_err_pid*
+replay_pid*
+
+### 4. Temporary & Swap Files ###
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+### 5. Local Configuration & Secrets ###
+# Ignore local environment overrides and credential keys
+.env
+.env.local
+.env.*.local
+application-local.properties
+application-local.yaml
+application-local.yml
+*.jks
+*.p12
+*.pem
+*.key
+
+### 6. IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+### 7. Eclipse / Spring Tool Suite (STS) ###
+.apt_generated/
+.apt_generated_tests/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+### 8. Visual Studio Code ###
+.vscode/
+*.code-workspace
+
+### 9. NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### 10. Operating System Files ###
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+### 11. Project Specific ###
+HELP.md
