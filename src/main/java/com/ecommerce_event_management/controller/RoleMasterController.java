@@ -6,12 +6,15 @@ import com.ecommerce_event_management.common.dto.PageResponse;
 import com.ecommerce_event_management.dto.request.RoleRequestDTO;
 import com.ecommerce_event_management.dto.response.RoleResponseDTO;
 import com.ecommerce_event_management.service.RoleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Role Master", description = "Role management APIs (CRUD, soft/hard delete, dynamic search & pagination)")
 @RestController
 @RequestMapping("/api/v1/roles")
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class RoleMasterController {
     private final RoleService roleService;
 
     // 1. GET (List with SearchTerm, Id, Pagination, PageSize=-1 for all, SortBy, SortOrder)
+    @Operation(summary = "Get list of roles with filtering, pagination, and sorting (PageSize=-1 returns all)")
     @GetMapping
     public ResponseEntity<ApiResponse<PageResponse<RoleResponseDTO>>> getRoles(
             @ModelAttribute CommonFilterDTO filter) {
@@ -28,6 +32,7 @@ public class RoleMasterController {
     }
 
     // 1.1 GET by ID
+    @Operation(summary = "Get role by ID")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<RoleResponseDTO>> getRoleById(@PathVariable Long id) {
         RoleResponseDTO role = roleService.getRoleById(id);
@@ -35,6 +40,7 @@ public class RoleMasterController {
     }
 
     // 2. POST (Create)
+    @Operation(summary = "Create a new role")
     @PostMapping
     public ResponseEntity<ApiResponse<RoleResponseDTO>> createRole(
             @Valid @RequestBody RoleRequestDTO request) {
@@ -43,6 +49,7 @@ public class RoleMasterController {
     }
 
     // 3. PUT (Update)
+    @Operation(summary = "Update an existing role")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<RoleResponseDTO>> updateRole(
             @PathVariable Long id,
@@ -52,6 +59,7 @@ public class RoleMasterController {
     }
 
     // 4. DELETE (Soft delete by default, supports ?hard=true as query param)
+    @Operation(summary = "Delete role (Soft delete by default, or hard delete if ?hard=true)")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteRole(
             @PathVariable Long id,
@@ -66,6 +74,7 @@ public class RoleMasterController {
     }
 
     // 5. DELETE (Dedicated Hard Delete endpoint)
+    @Operation(summary = "Permanently hard delete a role")
     @DeleteMapping("/{id}/hard")
     public ResponseEntity<ApiResponse<Void>> hardDeleteRole(@PathVariable Long id) {
         roleService.hardDeleteRole(id);

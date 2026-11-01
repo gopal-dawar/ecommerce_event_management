@@ -32,7 +32,12 @@ public class SecurityConfig {
                     "/api/v1/auth/**",
                     "/api/v1/public/**",
                     "/actuator/**",
-                    "/error"
+                    "/error",
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/swagger-resources/**",
+                    "/webjars/**"
                 ).permitAll()
                 .anyRequest().permitAll() // Allow development access; can be tightened to .authenticated() when JWT is added
             );

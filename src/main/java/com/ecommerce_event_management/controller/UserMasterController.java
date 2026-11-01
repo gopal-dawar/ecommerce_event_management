@@ -8,12 +8,15 @@ import com.ecommerce_event_management.dto.request.UserCreateRequestDTO;
 import com.ecommerce_event_management.dto.request.UserUpdateRequestDTO;
 import com.ecommerce_event_management.dto.response.UserResponseDTO;
 import com.ecommerce_event_management.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "User Master", description = "User management APIs (CRUD, soft/hard delete, dynamic search & pagination, password update)")
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class UserMasterController {
     private final UserService userService;
 
     // 1. GET (List with SearchTerm, Id, Pagination, PageSize=-1 for all, SortBy, SortOrder)
+    @Operation(summary = "Get list of users with filtering, pagination, and sorting (PageSize=-1 returns all)")
     @GetMapping
     public ResponseEntity<ApiResponse<PageResponse<UserResponseDTO>>> getUsers(
             @ModelAttribute CommonFilterDTO filter) {
@@ -30,6 +34,7 @@ public class UserMasterController {
     }
 
     // 1.1 GET by ID
+    @Operation(summary = "Get user by ID")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<UserResponseDTO>> getUserById(@PathVariable Long id) {
         UserResponseDTO user = userService.getUserById(id);
@@ -37,6 +42,7 @@ public class UserMasterController {
     }
 
     // 2. POST (Create)
+    @Operation(summary = "Create a new user")
     @PostMapping
     public ResponseEntity<ApiResponse<UserResponseDTO>> createUser(
             @Valid @RequestBody UserCreateRequestDTO request) {
@@ -45,6 +51,7 @@ public class UserMasterController {
     }
 
     // 3. PUT (Update)
+    @Operation(summary = "Update an existing user")
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<UserResponseDTO>> updateUser(
             @PathVariable Long id,
@@ -54,6 +61,7 @@ public class UserMasterController {
     }
 
     // 3.1 PATCH (Change Password)
+    @Operation(summary = "Change user password")
     @PatchMapping("/{id}/change-password")
     public ResponseEntity<ApiResponse<Void>> changePassword(
             @PathVariable Long id,
@@ -63,6 +71,7 @@ public class UserMasterController {
     }
 
     // 4. DELETE (Soft delete by default, supports ?hard=true as query param)
+    @Operation(summary = "Delete user (Soft delete by default, or hard delete if ?hard=true)")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteUser(
             @PathVariable Long id,
@@ -77,6 +86,7 @@ public class UserMasterController {
     }
 
     // 5. DELETE (Dedicated Hard Delete endpoint)
+    @Operation(summary = "Permanently hard delete a user")
     @DeleteMapping("/{id}/hard")
     public ResponseEntity<ApiResponse<Void>> hardDeleteUser(@PathVariable Long id) {
         userService.hardDeleteUser(id);
